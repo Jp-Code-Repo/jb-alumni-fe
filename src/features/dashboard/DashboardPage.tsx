@@ -5,11 +5,11 @@ import AppWidget from "@/components/common/AppWidget";
 import AppWidgetGrid from "@/components/common/AppWidgetGrid";
 
 import AlumniGrowthChart from "./components/AlumniGrowthChart";
-import PageHeader from "./components/PageHeader";
+import DashboardHeader from "./components/DashboardHeader";
 import StatsCard from "./components/StatsCard";
 import StatsGrid from "./components/StatsGrid";
 import UpcomingEvents from "./components/UpcomingEvents";
-import RecentAlumni from "./components/RecentAlumni";
+
 
 export default function DashboardPage() {
   return (
@@ -22,10 +22,7 @@ export default function DashboardPage() {
         ]}
       />
 
-      <PageHeader
-        title="Dashboard"
-        description="Welcome to the Alumni System Dashboard."
-      />
+      <DashboardHeader />
 
       <StatsGrid>
         {dashboardStats.map((stat) => {

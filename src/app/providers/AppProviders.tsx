@@ -3,6 +3,17 @@ import { ThemeProvider } from "next-themes";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 interface AppProvidersProps {
   children: ReactNode;
 }
@@ -17,9 +28,11 @@ export default function AppProviders({
       enableSystem={false}
       storageKey="alumni-ui-theme"
     >
-      <TooltipProvider>
-        {children}
-      </TooltipProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          {children}
+        </TooltipProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

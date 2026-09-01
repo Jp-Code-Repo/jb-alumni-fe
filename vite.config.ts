@@ -6,6 +6,7 @@ import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import path from "path";
 
 export default defineConfig({
+  base: '/jbalumni',
   plugins: [
     tanstackRouter({
       target: "react",

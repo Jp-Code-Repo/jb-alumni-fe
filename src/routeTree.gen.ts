@@ -9,38 +9,110 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AlumniRouteRouteImport } from './routes/alumni/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AlumniReportsRouteImport } from './routes/alumni/reports'
+import { Route as AlumniMasterlistRouteImport } from './routes/alumni/masterlist'
+import { Route as AlumniProfileCreateRouteImport } from './routes/alumni/profile.create'
+import { Route as AlumniProfileIdRouteImport } from './routes/alumni/profile.$id'
 
+const AlumniRouteRoute = AlumniRouteRouteImport.update({
+  id: '/alumni',
+  path: '/alumni',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AlumniReportsRoute = AlumniReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AlumniRouteRoute,
+} as any)
+const AlumniMasterlistRoute = AlumniMasterlistRouteImport.update({
+  id: '/masterlist',
+  path: '/masterlist',
+  getParentRoute: () => AlumniRouteRoute,
+} as any)
+const AlumniProfileCreateRoute = AlumniProfileCreateRouteImport.update({
+  id: '/profile/create',
+  path: '/profile/create',
+  getParentRoute: () => AlumniRouteRoute,
+} as any)
+const AlumniProfileIdRoute = AlumniProfileIdRouteImport.update({
+  id: '/profile/$id',
+  path: '/profile/$id',
+  getParentRoute: () => AlumniRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/alumni': typeof AlumniRouteRouteWithChildren
+  '/alumni/masterlist': typeof AlumniMasterlistRoute
+  '/alumni/reports': typeof AlumniReportsRoute
+  '/alumni/profile/$id': typeof AlumniProfileIdRoute
+  '/alumni/profile/create': typeof AlumniProfileCreateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/alumni': typeof AlumniRouteRouteWithChildren
+  '/alumni/masterlist': typeof AlumniMasterlistRoute
+  '/alumni/reports': typeof AlumniReportsRoute
+  '/alumni/profile/$id': typeof AlumniProfileIdRoute
+  '/alumni/profile/create': typeof AlumniProfileCreateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/alumni': typeof AlumniRouteRouteWithChildren
+  '/alumni/masterlist': typeof AlumniMasterlistRoute
+  '/alumni/reports': typeof AlumniReportsRoute
+  '/alumni/profile/$id': typeof AlumniProfileIdRoute
+  '/alumni/profile/create': typeof AlumniProfileCreateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/alumni'
+    | '/alumni/masterlist'
+    | '/alumni/reports'
+    | '/alumni/profile/$id'
+    | '/alumni/profile/create'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/alumni'
+    | '/alumni/masterlist'
+    | '/alumni/reports'
+    | '/alumni/profile/$id'
+    | '/alumni/profile/create'
+  id:
+    | '__root__'
+    | '/'
+    | '/alumni'
+    | '/alumni/masterlist'
+    | '/alumni/reports'
+    | '/alumni/profile/$id'
+    | '/alumni/profile/create'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AlumniRouteRoute: typeof AlumniRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/alumni': {
+      id: '/alumni'
+      path: '/alumni'
+      fullPath: '/alumni'
+      preLoaderRoute: typeof AlumniRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +120,58 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/alumni/reports': {
+      id: '/alumni/reports'
+      path: '/reports'
+      fullPath: '/alumni/reports'
+      preLoaderRoute: typeof AlumniReportsRouteImport
+      parentRoute: typeof AlumniRouteRoute
+    }
+    '/alumni/masterlist': {
+      id: '/alumni/masterlist'
+      path: '/masterlist'
+      fullPath: '/alumni/masterlist'
+      preLoaderRoute: typeof AlumniMasterlistRouteImport
+      parentRoute: typeof AlumniRouteRoute
+    }
+    '/alumni/profile/create': {
+      id: '/alumni/profile/create'
+      path: '/profile/create'
+      fullPath: '/alumni/profile/create'
+      preLoaderRoute: typeof AlumniProfileCreateRouteImport
+      parentRoute: typeof AlumniRouteRoute
+    }
+    '/alumni/profile/$id': {
+      id: '/alumni/profile/$id'
+      path: '/profile/$id'
+      fullPath: '/alumni/profile/$id'
+      preLoaderRoute: typeof AlumniProfileIdRouteImport
+      parentRoute: typeof AlumniRouteRoute
+    }
   }
 }
 
+interface AlumniRouteRouteChildren {
+  AlumniMasterlistRoute: typeof AlumniMasterlistRoute
+  AlumniReportsRoute: typeof AlumniReportsRoute
+  AlumniProfileIdRoute: typeof AlumniProfileIdRoute
+  AlumniProfileCreateRoute: typeof AlumniProfileCreateRoute
+}
+
+const AlumniRouteRouteChildren: AlumniRouteRouteChildren = {
+  AlumniMasterlistRoute: AlumniMasterlistRoute,
+  AlumniReportsRoute: AlumniReportsRoute,
+  AlumniProfileIdRoute: AlumniProfileIdRoute,
+  AlumniProfileCreateRoute: AlumniProfileCreateRoute,
+}
+
+const AlumniRouteRouteWithChildren = AlumniRouteRoute._addFileChildren(
+  AlumniRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AlumniRouteRoute: AlumniRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

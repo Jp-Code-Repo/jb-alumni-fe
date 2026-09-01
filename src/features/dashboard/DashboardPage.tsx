@@ -9,7 +9,7 @@ import PageHeader from "./components/PageHeader";
 import StatsCard from "./components/StatsCard";
 import StatsGrid from "./components/StatsGrid";
 import UpcomingEvents from "./components/UpcomingEvents";
-import RecentAlumni from "./components/RecentAlumni";
+//import RecentAlumni from "./components/RecentAlumni";
 
 export default function DashboardPage() {
   return (
